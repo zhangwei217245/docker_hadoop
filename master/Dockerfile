@@ -5,7 +5,8 @@ ENV HADOOP_VERSION 2.8.0
 
 # Download hadoop tarball and install to /usr/local
 RUN curl -s http://apache.cs.utah.edu/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz | tar -zx -C /usr/local/
-RUN cd /usr/local && ln -s ./hadoop-$HADOOP_VERSION hadoop
+WORKDIR /usr/local
+RUN ln -s ./hadoop-$HADOOP_VERSION hadoop
 
 # Installing google snappy compression library for HDFS
 RUN apt install -y libsnappy-java libsnappy-dev libsnappy-jni
@@ -26,5 +27,11 @@ RUN sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/usr/local/had
 
 RUN mkdir $HADOOP_PREFIX/input
 RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
+
+RUN 
+
+# by default, hadoop will put all its data files in to /tmp. So we expose /tmp to host machine.
+# these files include namenode files, datanode files and secondary namemode files. 
+VOLUME /tmp $HADOOP_PREFIX/logs
 
 
