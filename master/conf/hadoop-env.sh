@@ -20,7 +20,7 @@
 # optional.  When running a distributed configuration it is best to
 # set JAVA_HOME in this file, so that it is correctly defined on
 # remote nodes.
-
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native/Linux-amd64-64/:/usr/local/lib/
 # The java implementation to use.
 export JAVA_HOME=${JAVA_HOME}
 
